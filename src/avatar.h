@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "log.h"
+
 #define MASK_FILE "mask.jpg"
 
 struct Window {

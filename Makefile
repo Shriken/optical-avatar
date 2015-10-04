@@ -19,8 +19,8 @@ CXXFLAGS += `pkg-config --cflags opencv`
 
 all: avatar
 
-avatar: src/avatar.o
-	$(CXX) $(LDFLAGS) $^ -o avatar
+avatar: $(SRC:.cpp=.o)
+	$(CXX) $(PLATFORM_FLAGS) $(LDFLAGS) $^ -o avatar
 
 debug: $(SRC)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $(BIN)

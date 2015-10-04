@@ -2,8 +2,7 @@
 
 int main(int argc, char **argv) {
 	if (!init()) {
-		printf("[31;1merror:[0;m ");
-		printf("there was an error in initialization\n");
+		logError("there was an error in initialization\n");
 		return EXIT_FAILURE;
 	}
 
@@ -18,8 +17,7 @@ int main(int argc, char **argv) {
 bool init() {
 	IplImage *image = cvLoadImage(MASK_FILE);
 	if (image == NULL) {
-		printf("[31;1merror: [0;m");
-		printf("image %s not found\n", MASK_FILE);
+		logError("image %s not found\n", MASK_FILE);
 		return false;
 	}
 
