@@ -1,35 +1,34 @@
-CC = g++
+CXX = g++
 
-CFLAGS = -Wall
+CXXFLAGS  = -Wall -g
+LDFLAGS   = -lm -lGLEW `pkg-config --libs opencv`
+
 PLATFORM_FLAGS =
-DEBUGFLAGS = -g
-
-PLATFORM_LIBS =
 
 BIN = avatar
 SRC = $(wildcard src/*.cpp)
 
 ifeq ($(shell uname -s), Darwin)
-	CC = clang++
+	CXX = clang++
 	PLATFORM_FLAGS = -mmacosx-version-min=10.7 -D__MAC__
-	PLATFORM_LIBS = -framework GLUT -framework OpenGL
+	LDFLAGS += -framework GLUT -framework OpenGL
 endif
 
-FLAGS = $(PLATFORM_FLAGS) $(CFLAGS)
-LIBS = -lm $(PLATFORM_LIBS) -lGLEW
+CXXFLAGS += $(PLATFORM_FLAGS)
+CXXFLAGS += `pkg-config --cflags opencv`
 
-all: $(BIN)
+all: avatar
 
-$(BIN): $(SRC)
-	$(CC) $(FLAGS) $(LIBS) $^ -o $@
+avatar: src/avatar.o
+	$(CXX) $(LDFLAGS) $^ -o avatar
 
 debug: $(SRC)
-	$(CC) $(FLAGS) $(DEBUGFLAGS) $(LIBS) $^ -o $(BIN)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $(BIN)
 
 .PHONY: clean run
 
 clean:
-	rm -f *.o $(BIN)
+	rm -f $(wildcard src/*.o) $(BIN)
 
 run: $(BIN)
 	./$(BIN)

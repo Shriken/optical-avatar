@@ -1,9 +1,12 @@
-#include "main.h"
+#include "avatar.h"
 
 int main(int argc, char **argv) {
 	if (!init()) {
-		printf("error: there was an error in initialization\n");
+		printf("[31;1merror:[0;m ");
+		printf("there was an error in initialization\n");
+		return EXIT_FAILURE;
 	}
+
 	initGlut(argc, argv);
 	glewInit();
 
@@ -13,6 +16,13 @@ int main(int argc, char **argv) {
 }
 
 bool init() {
+	IplImage *image = cvLoadImage(MASK_FILE);
+	if (image == NULL) {
+		printf("[31;1merror: [0;m");
+		printf("image %s not found\n", MASK_FILE);
+		return false;
+	}
+
 	return true;
 }
 

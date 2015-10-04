@@ -2,9 +2,13 @@
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
+#include <opencv/cv.hpp>
+#include <opencv/highgui.h>
 
 #include <stdio.h>
 #include <math.h>
+
+#define MASK_FILE "mask.jpg"
 
 struct Window {
 	int width;
