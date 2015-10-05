@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string>
 
 #include "log.h"
 #include "window.h"
@@ -20,6 +21,7 @@ IplImage *image = NULL;
 
 int main(int argc, char **argv);
 bool init();
+IplImage *loadImage(std::string filename);
 void initGlut(int argc, char **argv);
 
 void idle();

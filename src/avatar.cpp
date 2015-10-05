@@ -6,6 +6,8 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
+	printf("%lx\n", sizeof(IplImage));
+
 	initGlut(argc, argv);
 	glewInit();
 
@@ -15,16 +17,23 @@ int main(int argc, char **argv) {
 }
 
 bool init() {
-	image = cvLoadImage(MASK_FILE);
-	if (image == NULL) {
-		logError("image %s not found\n", MASK_FILE);
-		return false;
-	}
-
+	if ((image = loadImage(MASK_FILE)) == NULL) return true;
 	cvFlip(image, image, 0);
 	window.setDimensions(image->width, image->height);
 
 	return true;
+}
+
+IplImage *loadImage(std::string filename) {
+	IplImage *image;
+	std::string path = "res/" + filename;
+
+	image = cvLoadImage(path.c_str());
+	if (image == NULL) {
+		logError("image %s not found\n", path.c_str());
+	}
+
+	return image;
 }
 
 void initGlut(int argc, char **argv) {
