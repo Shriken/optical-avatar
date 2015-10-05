@@ -6,8 +6,6 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	printf("%lx\n", sizeof(IplImage));
-
 	initGlut(argc, argv);
 	glewInit();
 
@@ -17,9 +15,12 @@ int main(int argc, char **argv) {
 }
 
 bool init() {
-	if ((image = loadImage(MASK_FILE)) == NULL) return true;
-	cvFlip(image, image, 0);
-	window.setDimensions(image->width, image->height);
+	if ((mask = loadImage(MASK_FILE)) == NULL) return true;
+	cvFlip(mask, mask, 0);
+
+	if ((background = loadImage(BACKGROUND_FILE)) == NULL) return true;
+	cvFlip(background, background, 0);
+	window.setDimensions(background->width, background->height);
 
 	return true;
 }
@@ -61,9 +62,15 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glDrawPixels(
-		image->width, image->height,
+		background->width, background->height,
 		GL_BGR, GL_UNSIGNED_BYTE,
-		image->imageData
+		background->imageData
+	);
+
+	glDrawPixels(
+		mask->width, mask->height,
+		GL_BGR, GL_UNSIGNED_BYTE,
+		mask->imageData
 	);
 
 	// perspective transform

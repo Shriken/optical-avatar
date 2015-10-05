@@ -13,11 +13,13 @@
 #include "window.h"
 
 #define MASK_FILE "mask.jpg"
+#define BACKGROUND_FILE "background.jpg"
 
 float FOV_Y = 30;
 
 struct Window window(800, 600);
-IplImage *image = NULL;
+IplImage *mask = NULL;
+IplImage *background = NULL;
 
 int main(int argc, char **argv);
 bool init();
