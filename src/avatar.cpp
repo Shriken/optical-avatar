@@ -15,11 +15,14 @@ int main(int argc, char **argv) {
 }
 
 bool init() {
-	IplImage *image = cvLoadImage(MASK_FILE);
+	image = cvLoadImage(MASK_FILE);
 	if (image == NULL) {
 		logError("image %s not found\n", MASK_FILE);
 		return false;
 	}
+
+	cvFlip(image, image, 0);
+	window.setDimensions(image->width, image->height);
 
 	return true;
 }
@@ -48,10 +51,16 @@ void idle() {
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glDrawPixels(
+		image->width, image->height,
+		GL_BGR, GL_UNSIGNED_BYTE,
+		image->imageData
+	);
+
 	// perspective transform
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(FOV_Y, ASPECT_RATIO, 0.1, 100);
+	gluPerspective(FOV_Y, window.aspectRatio, 0.1, 100);
 
 	glutSwapBuffers();
 }

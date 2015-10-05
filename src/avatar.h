@@ -9,19 +9,14 @@
 #include <math.h>
 
 #include "log.h"
+#include "window.h"
 
 #define MASK_FILE "mask.jpg"
-
-struct Window {
-	int width;
-	int height;
-	Window(int w, int h) : width(w), height(h) {}
-};
 
 float FOV_Y = 30;
 
 struct Window window(800, 600);
-float ASPECT_RATIO = 1. * window.width / window.height;
+IplImage *image = NULL;
 
 int main(int argc, char **argv);
 bool init();
