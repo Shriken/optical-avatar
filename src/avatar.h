@@ -37,5 +37,7 @@ void initGlut(int argc, char **argv);
 void idle();
 void display();
 void markFixation();
+float remap(float val, float start1, float end1, float start2, float end2);
+void resize(int w, int h);
 void keyboard(unsigned char key, int x, int y);
 void quit();
