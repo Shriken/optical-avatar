@@ -1,13 +1,14 @@
 #include "fixations.h"
 
 FixationSet::FixationSet(string filename) {
+	filename = "res/" + filename;
 	this->file = fopen(filename.c_str(), "r");
 	if (this->file == NULL) {
 		logError("file %s does not exist\n", filename.c_str());
 	}
 }
 
-fixation FixationSet::nextFixation() {
+fixation FixationSet::next() {
 	fixation ret;
 
 	if (feof(this->file)) {

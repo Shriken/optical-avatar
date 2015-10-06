@@ -16,5 +16,5 @@ class FixationSet {
 	FILE *file;
 public:
 	FixationSet(string filename);
-	fixation nextFixation();
+	fixation next();
 };

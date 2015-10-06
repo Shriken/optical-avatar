@@ -22,19 +22,11 @@ bool init() {
 	cvFlip(background, background, 0);
 	window.setDimensions(background->width, background->height);
 
+	// mark the fixation as dirty so it gets loaded in main
+	curFixation.duration = 0;
+	lastFixationTime = 0;
+
 	return true;
-}
-
-IplImage *loadImage(std::string filename) {
-	IplImage *image;
-	std::string path = "res/" + filename;
-
-	image = cvLoadImage(path.c_str());
-	if (image == NULL) {
-		logError("image %s not found\n", path.c_str());
-	}
-
-	return image;
 }
 
 void initGlut(int argc, char **argv) {
@@ -55,7 +47,21 @@ void initGlut(int argc, char **argv) {
 };
 
 void idle() {
-	glutPostRedisplay();
+	float time = 1. * clock() / CLOCKS_PER_SEC;
+	fixation nextFixation;
+
+	if (time - lastFixationTime >= curFixation.duration) {
+		nextFixation = fixationSet.next();
+		if (nextFixation.duration > 0) {
+			curFixation = nextFixation;
+			lastFixationTime = time;
+			printf(
+				"new fixation: %f %f %f\n",
+				curFixation.x, curFixation.y, curFixation.duration
+			);
+			glutPostRedisplay();
+		}
+	}
 }
 
 void display() {
