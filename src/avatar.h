@@ -36,5 +36,6 @@ void initGlut(int argc, char **argv);
 
 void idle();
 void display();
+void markFixation();
 void keyboard(unsigned char key, int x, int y);
 void quit();

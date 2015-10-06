@@ -79,12 +79,26 @@ void display() {
 		mask->imageData
 	);
 
-	// perspective transform
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(FOV_Y, window.aspectRatio, 0.1, 100);
+	markFixation();
 
 	glutSwapBuffers();
+}
+
+void markFixation() {
+	int w = window.width;
+	int h = window.height;
+	float x = curFixation.x / w * 2 - 1;
+	float y = curFixation.y / h * 2 - 1;
+
+	glColor3f(1.0, 1.0, 0.0);
+	glLineWidth(3);
+
+	glBegin(GL_LINES);
+		glVertex2f(x - 10. / w, y - 10. / h);
+		glVertex2f(x + 11. / w, y + 11. / h);
+		glVertex2f(x + 11. / w, y - 10. / h);
+		glVertex2f(x - 10. / w, y + 11. / h);
+	glEnd();
 }
 
 void keyboard(unsigned char key, int x, int y) {
