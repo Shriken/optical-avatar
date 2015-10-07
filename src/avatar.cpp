@@ -86,21 +86,19 @@ void display() {
 }
 
 void markFixation() {
-	int bw = background->width;
-	int bh = background->height;
-	int ww = window.width;
-	int wh = window.height;
-	float x = remap(curFixation.x, 0, ww, -1, 1);
-	float y = remap(curFixation.y, 0, wh, -1, 1);
+	int w = window.width;
+	int h = window.height;
+	float x = remap(curFixation.x, 0, w, -1, 1);
+	float y = remap(curFixation.y, 0, h, -1, 1);
 
 	glColor3f(1.0, 1.0, 0.0);
 	glLineWidth(3);
 
 	glBegin(GL_LINES);
-		glVertex2f(x - 10. / ww, y - 10. / wh);
-		glVertex2f(x + 11. / ww, y + 11. / wh);
-		glVertex2f(x + 11. / ww, y - 10. / wh);
-		glVertex2f(x - 10. / ww, y + 11. / wh);
+		glVertex2f(x - 10. / w, y - 10. / h);
+		glVertex2f(x + 11. / w, y + 11. / h);
+		glVertex2f(x + 10. / w, y - 10. / h);
+		glVertex2f(x - 11. / w, y + 11. / h);
 	glEnd();
 }
 
