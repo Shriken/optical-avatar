@@ -53,13 +53,11 @@ void idle() {
 
 	if (time - lastFixationTime >= curFixation.duration) {
 		nextFixation = fixationSet.next();
+
 		if (nextFixation.duration > 0) {
 			curFixation = nextFixation;
 			lastFixationTime = time;
-			printf(
-				"new fixation: %f %f %f\n",
-				curFixation.x, curFixation.y, curFixation.duration
-			);
+
 			glutPostRedisplay();
 		}
 	}
@@ -73,7 +71,6 @@ void display() {
 		GL_BGR, GL_UNSIGNED_BYTE,
 		background->imageData
 	);
-
 	glDrawPixels(
 		mask->width, mask->height,
 		GL_BGR, GL_UNSIGNED_BYTE,
