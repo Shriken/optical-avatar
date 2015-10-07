@@ -16,5 +16,7 @@ class FixationSet {
 	FILE *file;
 public:
 	FixationSet(string filename);
+	~FixationSet();
+	void loadFile(string filename);
 	fixation next();
 };

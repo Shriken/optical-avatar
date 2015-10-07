@@ -8,6 +8,23 @@ FixationSet::FixationSet(string filename) {
 	}
 }
 
+FixationSet::~FixationSet() {
+	if (this->file != NULL) {
+		fclose(this->file);
+	}
+}
+
+void FixationSet::loadFile(string filename) {
+	if (this->file != NULL) {
+		fclose(this->file);
+	}
+
+	this->file = fopen(("res/" + filename).c_str(), "r");
+	if (this->file == NULL) {
+		logError("file %s does not exist\n", filename.c_str());
+	}
+}
+
 fixation FixationSet::next() {
 	fixation ret;
 

@@ -119,8 +119,15 @@ void resize(int w, int h) {
 }
 
 void keyboard(unsigned char key, int x, int y) {
-	if (key == 'q') {
-		quit();
+	switch (key) {
+		case 'q':
+			quit();
+			break;
+		case 'r':
+			fixationSet.loadFile(FIXATION_FILE);
+			break;
+		default:
+			break;
 	}
 }
 
