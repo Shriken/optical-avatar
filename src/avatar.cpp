@@ -79,8 +79,8 @@ void display() {
 		background->imageData
 	);
 
-	int i = 5 * curFixation.y / background->height;
-	int j = 9 * curFixation.x / background->width;
+	int i = remap(curFixation.y, 0, background->height / scaleY, 0, 5);
+	int j = remap(curFixation.x, 0, background->width / scaleX, 0, 9);
 	glDrawPixels(
 		gridGazes[i][j]->width, gridGazes[i][j]->height,
 		GL_BGR, GL_UNSIGNED_BYTE,
