@@ -24,8 +24,7 @@ bool init() {
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 9; j++) {
 			sprintf(filename, "grid-photos/%i%i.jpg", i, j);
-
-			gridGazes[i][j] = loadScaledImage(filename, 1. / 6, 1. / 6);
+			gridGazes[i][j] = loadScaledImage(filename, 1. / 4, 1. / 4);
 			if (gridGazes[i][j] == NULL) return false;
 		}
 	}
@@ -79,10 +78,13 @@ void display() {
 		GL_BGR, GL_UNSIGNED_BYTE,
 		background->imageData
 	);
+
+	int i = 5 * curFixation.y / background->height;
+	int j = 9 * curFixation.x / background->width;
 	glDrawPixels(
-		gridGazes[0][0]->width, gridGazes[0][0]->height,
+		gridGazes[i][j]->width, gridGazes[i][j]->height,
 		GL_BGR, GL_UNSIGNED_BYTE,
-		gridGazes[0][0]->imageData
+		gridGazes[i][j]->imageData
 	);
 
 	markFixation();
