@@ -15,12 +15,20 @@ int main(int argc, char **argv) {
 }
 
 bool init() {
-	if ((mask = loadImage(MASK_FILE)) == NULL) return true;
-	cvFlip(mask, mask, 0);
-
-	if ((background = loadImage(BACKGROUND_FILE)) == NULL) return true;
-	cvFlip(background, background, 0);
+	// load background
+	background = loadScaledImage(BACKGROUND_FILE, 2, 2);
+	if (background == NULL) return false;
 	window.setDimensions(background->width, background->height);
+
+	char filename[16];
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 9; j++) {
+			sprintf(filename, "grid-photos/%i%i.jpg", i, j);
+
+			gridGazes[i][j] = loadScaledImage(filename, 1. / 6, 1. / 6);
+			if (gridGazes[i][j] == NULL) return false;
+		}
+	}
 
 	// mark the fixation as dirty so it gets loaded in main
 	curFixation.duration = 0;
@@ -72,9 +80,9 @@ void display() {
 		background->imageData
 	);
 	glDrawPixels(
-		mask->width, mask->height,
+		gridGazes[0][0]->width, gridGazes[0][0]->height,
 		GL_BGR, GL_UNSIGNED_BYTE,
-		mask->imageData
+		gridGazes[0][0]->imageData
 	);
 
 	markFixation();
@@ -118,5 +126,12 @@ void keyboard(unsigned char key, int x, int y) {
 }
 
 void quit() {
+	cvReleaseImage(&background);
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 9; j++) {
+			cvReleaseImage(&(gridGazes[i][j]));
+		}
+	}
+
 	exit(EXIT_SUCCESS);
 }

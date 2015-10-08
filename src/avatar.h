@@ -23,8 +23,8 @@
 float FOV_Y = 30;
 
 struct Window window(800, 600);
-IplImage *mask = NULL;
 IplImage *background = NULL;
+IplImage *gridGazes[5][9];
 FixationSet fixationSet(FIXATION_FILE);
 
 fixation curFixation;
