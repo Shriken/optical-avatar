@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 
 bool init() {
 	// load background
-	background = loadScaledImage(BACKGROUND_FILE, 2, 2);
+	background = loadScaledImage(BACKGROUND_FILE, scaleX, scaleY);
 	if (background == NULL) return false;
 	window.setDimensions(background->width, background->height);
 
@@ -93,8 +93,8 @@ void display() {
 void markFixation() {
 	int w = window.width;
 	int h = window.height;
-	float x = remap(curFixation.x, 0, w, -1, 1);
-	float y = remap(curFixation.y, 0, h, -1, 1);
+	float x = remap(curFixation.x * scaleX, 0, w, -1, 1);
+	float y = remap(curFixation.y * scaleY, 0, h, -1, 1);
 
 	glColor3f(1.0, 1.0, 0.0);
 	glLineWidth(3);

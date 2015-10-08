@@ -22,6 +22,8 @@
 
 float FOV_Y = 30;
 
+float scaleX = 2;
+float scaleY = 2;
 struct Window window(800, 600);
 IplImage *background = NULL;
 IplImage *gridGazes[5][9];
